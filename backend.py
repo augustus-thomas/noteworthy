@@ -1,7 +1,6 @@
 # functions for backend calls
-
-
-
+import os
+import time
 
 # return whether filename exists
 def search_for_file(filename):
@@ -19,4 +18,12 @@ def write(contents, filename):
 # if filename exists, return a string with its contents
 def view(filename):
 	pass
+
+# list files in notes directory
+def list():
+	ouput = ""
+	for file in os.listdir("Notes"):
+		output.append(note + "\n")
+
+	return output
 
