@@ -36,7 +36,13 @@ def write(contents, filename, data):
 # if filename doesn't exist, return a string with error message
 # if filename exists, return a string with its contents
 def view(filename):
-	pass
+	if search_for_filename(filename):
+		with open(filename) as f:
+    		s = f.read()
+	else:
+		s = "File does not exist"
+	return s
+
 
 # list files in notes directory
 def list():
