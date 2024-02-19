@@ -25,6 +25,17 @@ def search_by_date(filename, date, after=True):
 def search_for_modfication_on_date(filename, date):
 	pass
 
+#^^ Change to search by date?
+
+# Fully deletes a file
+def remove_file(file):
+	os.remove(file)
+
+# Fully clears the file where info is stored
+def del_file_contents(file):
+	with open(file,'r+') as file:
+		file.truncate(0)
+
 # name is a filename. can have .md extension passed
 # if it has a period a different extension we will force it to be .md
 
