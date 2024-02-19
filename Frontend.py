@@ -106,6 +106,77 @@ def ViewNotes():
     print(f"{end_color}")
     main()
 
+def ClearNotes():
+    print(f"{bold_text}{purple_text}\nClear Notes{end_color}")
+    print(f"{blue_text}")
+
+    confirmation = input("Are you sure you want to clear all notes? (yes/no): ").lower()
+    if confirmation == "yes":
+        for file in os.listdir("Notes"):
+            os.remove(os.path.join("Notes", file))
+        print("All notes have been cleared.")
+    elif confirmation == "no":
+        print("Clear operation cancelled.")
+    else:
+        print("Invalid input. Please enter 'yes' or 'no'.")
+
+    print(f"{end_color}")
+    main()
+
+def DeleteNote():
+    print(f"{bold_text}{purple_text}\nDelete Note{end_color}")
+    print(f"{blue_text}")
+
+    filename = input("Enter the name of the note to delete (without .md extension): ")
+    if ".md" not in filename:
+        filename += ".md"
+    filepath = os.path.join("Notes", filename)
+
+    if os.path.exists(filepath):
+        os.remove(filepath)
+        print(f"{filename} has been deleted.")
+    else:
+        print(f"Error: {filename} does not exist.")
+
+    print(f"{end_color}")
+    main()
+
+def main(): 
+    print(f"{blue_text}{underline_text}")
+    print("Available Functions:")
+    print(f"{end_color}{blue_text}")
+    print("     add: to add notes")
+    print("     search: to search notes")
+    print("     list: to list notes")
+    print("     view: to view notes")
+    print("     help: to access the help manual")
+    print("     delete: to delete a note")
+    print("     clear: to clear all notes")
+    print("     exit: to exit the app\n")
+    
+    intended_action = input(f"{underline_text}What would you like to do?{end_color}{blue_text} ")
+    
+    if intended_action == "add":
+        AddNotes()
+    elif intended_action == "search":
+        SearchNotes()
+    elif intended_action == "list":
+        ListNotes()
+    elif intended_action == "view":
+        ViewNotes()
+    elif intended_action == "help":
+        Help()
+    elif intended_action == "delete":
+        DeleteNote()
+    elif intended_action == "clear":
+        ClearNotes()
+    elif intended_action == "exit":
+        exit()
+    else: 
+        print("Invalid input. Please try again.\n")
+        main()
+    
+    print(f"{end_color}")
 def Introduction():
     print(f"{bold_text}{purple_text}__________________________________________________________________")
     print("__________________________________________________________________\n")
