@@ -1,5 +1,6 @@
 import os
 import backend
+import time 
 
 bold_text = '\033[1m'
 end_color = '\033[0m'
@@ -7,6 +8,7 @@ purple_text = '\033[95m'
 underline_text = '\033[4m'
 blue_text = '\033[96m'
 underline_text = '\033[4m'
+red_text = '\033[0;31m'
 #Idea - Text editor in the command line 
 #Does anyone have any other ideas 
 #C - add, view, main, stylstic choices (color, bold), help, introduction
@@ -55,13 +57,13 @@ def AddNotes():
     content = []
     while True: 
         try: 
-            line = input()
+            line = input("")
         except EOFError:
             break 
         content.append(f"\n{line}")
 
     content_string = ' '.join([str(item) for item in content])
-    backend.write(content_string, name_of_file, date_of_file)
+    backend.write(content_string, date_of_file, name_of_file)
         
     print(f"{end_color}")
     main()
@@ -91,17 +93,16 @@ def ViewNotes():
     read_file = input(f"{underline_text}Input the Markdown File you wish to view: {end_color}{blue_text}")
     if ".md" not in read_file:
         read_file = f"{read_file}.md"
-    
-    read_file = f"Notes/{read_file}"
         
-    if not os.path.isfile(read_file):
-        print(f"{read_file} Does Not Exist{end_color}{blue_text}")
-        print("Use the AddNotes() function if you wish to create this file")
-        exit()
-    else:    
-        with open(read_file, 'r') as r:
-            note_content = r.read()
-            print(note_content)
+    print(backend.view(read_file))
+    #if not os.path.isfile(read_file):
+    #    print(f"{read_file} Does Not Exist{end_color}{blue_text}")
+    #    print("Use the AddNotes() function if you wish to create this file")
+    #    exit()
+    #else:    
+    #    with open(read_file, 'r') as r:
+    #        note_content = r.read()
+    #        print(note_content)
         
     print(f"{end_color}")
     main()
@@ -142,6 +143,7 @@ def DeleteNote():
     main()
 
 def main(): 
+    print(f"{bold_text}{purple_text}\nHomepage{end_color}")
     print(f"{blue_text}{underline_text}")
     print("Available Functions:")
     print(f"{end_color}{blue_text}")
@@ -173,10 +175,12 @@ def main():
     elif intended_action == "exit":
         exit()
     else: 
-        print("Invalid input. Please try again.\n")
+        print(f"{red_text}Invalid input. Please try again.\n{end_color}")
+        time.sleep(1)
         main()
     
     print(f"{end_color}")
+
 def Introduction():
     print(f"{bold_text}{purple_text}__________________________________________________________________")
     print("__________________________________________________________________\n")
@@ -187,35 +191,5 @@ def Introduction():
     {end_color}
     main()
 
-def main(): 
-    print(f"{blue_text}{underline_text}")
-    print("Available Functions:")
-    print(f"{end_color}{blue_text}")
-    print("     add: to add notes")
-    print("     search: to search notes")
-    print("     list: to list notes")
-    print("     view: to view notes")
-    print("     help: to access the help manuel")
-    print("     exit: to exit the app\n")
-    
-    intended_action = input(f"{underline_text}Do you wish to add, search, list, view, access the help manuel, or exit the app?{end_color}{blue_text} ")
-    
-    if intended_action == "add":
-        AddNotes()
-    elif intended_action == "search":
-        SearchNotes()
-    elif intended_action == "list":
-        ListNotes()
-    elif intended_action == "view":
-        ViewNotes()
-    elif intended_action == "help":
-        Help()
-    elif intended_action == "exit":
-        exit()
-    else: 
-        print("This function does not exist\n")
-        exit()
-    
-    print(f"{end_color}")
     
 Introduction()
