@@ -95,15 +95,7 @@ def ViewNotes():
         read_file = f"{read_file}.md"
         
     print(backend.view(read_file))
-    #if not os.path.isfile(read_file):
-    #    print(f"{read_file} Does Not Exist{end_color}{blue_text}")
-    #    print("Use the AddNotes() function if you wish to create this file")
-    #    exit()
-    #else:    
-    #    with open(read_file, 'r') as r:
-    #        note_content = r.read()
-    #        print(note_content)
-        
+    
     print(f"{end_color}")
     main()
 
