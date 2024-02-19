@@ -59,6 +59,8 @@ def SearchNotes():
     if read_input == "date":
         read_input = input(f"{blue_text}Input the date you with to search for (Format: 2000/12/31): ")
         #Passes to backend to have search_for_file ran
+        print("There are " + n + " matches. They are: ")
+        #print(##search_by_date filenameoutput + ": Created on " + ##search_for_file dateoutput)
 
     if read_input == "filename":
     
@@ -67,8 +69,9 @@ def SearchNotes():
         if ".md" not in read_input:
             read_input = f"{read_input}.md"
         #Passes to backend to have search_for_file ran
-        #print("There are " + n  + " matches. They are: ")
-        #print()
+        print("There are " + n  + " matches. They are: ")
+        #print(##search_for_file filenameoutput ": Created on " ##search_for_file dateoutput)
+        
         
 
 
