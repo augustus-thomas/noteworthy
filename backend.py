@@ -7,10 +7,14 @@ from datetime import date
 def search_for_filename(filename):
 	return filename in os.listdir("Notes")
 
-# return files modified by date. default to after passed date
-# return contents directly the date before the next day
-def search_by_date(filename, date, after=True):
-	year_date_month = date.split('\\')
+# returns the content in file from the date requested
+def search_content(filename, date):
+	pass
+	
+# returns a list of name date pairs [['name.md', '2022/04/11'], ['science.md', '2024/03/01']]
+def search_title(filename, date):
+	# date info needs to be formated YYYY/MM/DD
+	year_date_month = date.split('/')
 	# make date into EPOCH
 	epoch = datetime.datetime(*year_date_month, 0, 0, 0).strftime('%s')
 	output = ""
@@ -20,10 +24,6 @@ def search_by_date(filename, date, after=True):
 		if modified >= epoch:
 			output.append(filename + '\n')
 	return output
-
-# date is in format zero width space "YYYY-MM-DD" zero width space on its own line
-def search_for_modfication_on_date(filename, date):
-	pass
 
 # name is a filename. can have .md extension passed
 # if it has a period a different extension we will force it to be .md
@@ -57,7 +57,6 @@ def view(filename):
 	else:
 		s = "File does not exist"
 	return s
-
 
 # list files in notes directory
 def list():
