@@ -48,13 +48,36 @@ def AddNotes():
 
         w.write('\n\n')
     print(f"{end_color}")
+
+#Start of Trenton New Code
     
 def SearchNotes():
     print(f"{bold_text}{purple_text}\nSearch Notes{end_color}")
-    print(f"{blue_text}Name of Markdown File to search: ")
+    print(f"{blue_text}Would you like to search for file by modified date or by filename?")
+    #Takes user input for date or filename for preference.
+    read_input = input(f"{blue_text}Input 'date' or 'filename' for preferred search parameters: ")
+    if read_input == "date":
+        read_input = input(f"{blue_text}Input the date you with to search for (Format: 2000/12/31): ")
+        #Passes to backend to have search_for_file ran
+
+    if read_input == "filename":
+    
+        read_input = input(f"{blue_text}Input the filename that you wish to search for: ")
+        #Makes it an .md file if not inputted at first
+        if ".md" not in read_input:
+            read_input = f"{read_input}.md"
+        #Passes to backend to have search_for_file ran
+        #print("There are " + n  + " matches. They are: ")
+        #print()
+        
+
+
+    
     
     
     print(f"{end_color}")
+
+#End of Trenton New Code
 
 def ListNotes(): 
     print(f"{bold_text}{purple_text}\nList of Files{end_color}")
