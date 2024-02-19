@@ -64,7 +64,7 @@ def SearchNotes():
 
     if read_input == "filename":
     
-        read_input = input(f"{blue_text}Input the filename that you wish to search for: ")
+        read_input = input(f"{blue_text}Input the filename that you wish to search for (Format: filename.md): ")
         #Makes it an .md file if not inputted at first
         if ".md" not in read_input:
             read_input = f"{read_input}.md"
@@ -81,7 +81,16 @@ def SearchNotes():
     print(f"{end_color}")
 
 #End of Trenton New Code
+    
+#Start of mkdown pdf conversion
 
+def MKDownToPdf():
+    read_input = input(f"{blue_text}Input the file name which you wish to convert to PDF. (Format: filename.md): ")
+    #Passes to backend for conversion
+    
+
+
+#End of mkdown pdf conversion
 def ListNotes(): 
     print(f"{bold_text}{purple_text}\nList of Files{end_color}")
     print(f"{blue_text}")
