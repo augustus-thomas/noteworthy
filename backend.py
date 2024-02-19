@@ -12,17 +12,17 @@ def search_content(filename, date):
 	pass
 	
 # returns a list of name date pairs [['name.md', '2022/04/11'], ['science.md', '2024/03/01']]
-def search_title(filename, date):
+def search_title(date):
 	# date info needs to be formated YYYY/MM/DD
 	year_date_month = date.split('/')
 	# make date into EPOCH
 	epoch = datetime.datetime(*year_date_month, 0, 0, 0).strftime('%s')
-	output = ""
+	output = []
 	for filename in os.listdir("Notes"):
 		# get the time file was last modified
 		modified = os.path.getmtime(filename)
 		if modified >= epoch:
-			output.append(filename + '\n')
+			output.append([filename, modified])
 	return output
 
 # name is a filename. can have .md extension passed
