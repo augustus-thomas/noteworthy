@@ -52,7 +52,7 @@ def write(contents, date=date.today(), filename=None):
 # if filename exists, return a string with its contents
 def view(filename):
 	if search_for_filename(filename):
-		with open(filename) as f:
+		with open("./Notes/" + filename, "r+") as f:
 			s = f.read()
 	else:
 		s = "File does not exist"

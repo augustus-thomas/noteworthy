@@ -18,5 +18,7 @@ backend.write("Both file", date='2023-08-01', filename='both.md') # both
 # view
 # assert backend.view("test.md") == "Hello file" difficult to write tests with date feature in file
 print(backend.list())
+print(backend.view('testnote.md'))
+
 
 print("Tests passed.")
