@@ -70,7 +70,24 @@ def AddNotes():
     
 def SearchNotes():
     print(f"{bold_text}{purple_text}\nSearch Notes{end_color}")
-    print(f"{blue_text}Name of Markdown File to search: ")
+    print(f"{blue_text}Would you like to search for file by modified date or by filename?")
+    #Takes user input for date or filename for preference.
+    read_input = input(f"{blue_text}Input 'date' or 'filename' for preferred search parameters: ")
+    if read_input == "date":
+        read_input = input(f"{blue_text}Input the date you with to search for (Format: 2000/12/31): ")
+        #Passes to backend to have search_for_file ran
+        print("There are " + n + " matches. They are: ")
+        #print(##search_by_date filenameoutput + ": Created on " + ##search_for_file dateoutput)
+
+    if read_input == "filename":
+    
+        read_input = input(f"{blue_text}Input the filename that you wish to search for (Format: filename.md): ")
+        #Makes it an .md file if not inputted at first
+        if ".md" not in read_input:
+            read_input = f"{read_input}.md"
+        #Passes to backend to have search_for_file ran
+        print("There are " + n  + " matches. They are: ")
+        #print(##search_for_file filenameoutput ": Created on " ##search_for_file dateoutput)
     
     
     print(f"{end_color}")
@@ -134,6 +151,9 @@ def DeleteNote():
     print(f"{end_color}")
     main()
 
+def MKDownToPdf():
+    read_input = input(f"{blue_text}Input the file name which you wish to convert to PDF. (Format: filename.md): ")
+    
 def main(): 
     print(f"{bold_text}{purple_text}\nHomepage{end_color}")
     print(f"{blue_text}{underline_text}")
