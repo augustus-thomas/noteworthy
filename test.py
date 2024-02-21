@@ -1,5 +1,6 @@
 import backend
-
+from backend import input_pre_filled
+from backend import enter_edit
 # search for filename tests
 assert (backend.search_for_filename("testnote.md"))
 assert (backend.search_for_filename("doesntexist.md")) == False
@@ -22,3 +23,10 @@ print(backend.view('testnote.md'))
 
 
 print("Tests passed.")
+
+input_test = input_pre_filled("Here is some test stuff, edit it","Here is the premade text to edit")
+print(input_test)
+print("easyGUI + input_pre_filled test passed")
+
+enter_edit("testnote.md")
+print("editing passed")

@@ -47,6 +47,7 @@ Show files in the noteworthy directory.
 ```
 
 ### Search
+
 Search for a file in the noteworthy directory.
 
 Search by date. 
@@ -68,5 +69,28 @@ Search by title.
 >>> noteworthy search --title new_notes.md
 >>> There is 1 match. Display it? (y/[n])
 >>> Assume that software development exists... Then it can be said that
+```
+
+### Delete Files 
+Delete a Markdown file in the noteworthy directory. 
+
+```
+>>> Have user input the markdown file they want to delete
+>>> Delete file from the noteworthy directory 
+```
+### Delete Content From Files 
+Delete Content from files 
+
+```
+>>> Have a user input the markdown file they want to clear
+>>> Clear the text from this file
+```
+
+### Markdown to PDF 
+Create PDF files for the user 
+
+```
+>>> Have a user input the markdown file they want to convert
+>>> Convert provided markdown file to pdf
 ```
 
