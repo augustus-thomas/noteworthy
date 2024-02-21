@@ -11,7 +11,7 @@ underline_text = '\033[4m'
 red_text = '\033[0;31m'
 #Idea - Text editor in the command line 
 #Does anyone have any other ideas 
-#C - add, view, main, stylstic choices (color, bold), help, introduction
+#C - add, view, main, stylstic choices (color, bold), help, introduction, Noteworthy User Manual
 #T - search, markdown to PDF (I just figure we can add this feature because it shouldn't be too difficult), 
 #J - clear notes, delete files, list notes, edit notes (This one might be difficult to do)
 
