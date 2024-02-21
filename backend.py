@@ -3,7 +3,7 @@ import os
 import time
 from datetime import date
 
-import easygui
+#import easygui
 
 # return whether filename exists
 def search_for_filename(filename):
@@ -68,12 +68,11 @@ def write(contents, date=date.today(), filename=None):
 # if filename exists, return a string with its contents
 def view(filename):
 	if search_for_filename(filename):
-		with open(filename) as f:
+		with open("./Notes/" + filename, "r+") as f:
 			s = f.read()
 	else:
 		s = "File does not exist"
 	return s
-
 
 # list files in notes directory
 def list():
@@ -99,3 +98,4 @@ def enter_edit(file):
 	contents = input_pre_filled("Edit in the text box", contents)
 	del_file_contents(file)
 	write(contents, filename = file)
+ 
