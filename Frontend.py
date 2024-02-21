@@ -124,7 +124,7 @@ def main():
     print("     search: to search notes")
     print("     list: to list notes")
     print("     view: to view notes")
-    print("     help: to access the help manuel")
+    print("     help: to access the help manual")
     print("     exit: to exit the app\n")
     
     intended_action = input(f"{underline_text}Do you wish to add, search, list, view, access the help manuel, or exit the app?{end_color}{blue_text} ")
