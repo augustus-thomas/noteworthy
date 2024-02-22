@@ -92,6 +92,7 @@ def SearchNotes():
     
     print(f"{end_color}")
     main()
+    
 def ListNotes(): 
     print(f"{bold_text}{purple_text}\nList of Files{end_color}")
     print(f"{blue_text}")
