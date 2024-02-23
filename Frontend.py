@@ -35,7 +35,7 @@ def Help():
     else: 
         print (f"{red_text}Function not Available{end_color}")
         time.sleep(1.5)
-        main()
+    
     print (f"{end_color}") 
     main()
     
@@ -51,7 +51,8 @@ def AddNotes():
     
     print(f"{underline_text}Type notes below: {end_color}{blue_text}\n")
     print("     return key: Start a new line")
-    print("     ctrl + d keys: Stop typing to file\n")
+    print("     ctrl + d for mac: Stop typing to file\n")
+    print("     ctrl + z for windows: Stop typing to file\n")
     
     content = []
     while True: 
@@ -64,6 +65,8 @@ def AddNotes():
     content_string = ' '.join([str(item) for item in content])
     backend.write(content_string, date_of_file, name_of_file)
         
+    print("Notes added to file successfully")
+    time.sleep(1.5)
     print(f"{end_color}")
     main()
     
@@ -122,6 +125,7 @@ def ListNotes():
     list_of_notes = (os.listdir("Notes"))
     for note in list_of_notes:
         print(note)
+        time.sleep(2)
     
     print(f"{end_color}")
     main()
@@ -133,11 +137,12 @@ def ViewNotes():
     if ".md" not in read_file:
         read_file = f"{read_file}.md"
     
-    if backend.view(read_file) == "false":
+    if not backend.view(read_file):
         print(f"{red_text}File does not exist{end_color}")
         time.sleep(1.5)
     else: 
         print(backend.view(read_file))
+        time.sleep(2)
     
     print(f"{end_color}")
     main()
@@ -146,16 +151,15 @@ def ClearNotes():
     print(f"{bold_text}{purple_text}\nClear Notes{end_color}")
     print(f"{blue_text}")
 
-    confirmation = input("Are you sure you want to clear all notes? (yes/no): ").lower()
-    if confirmation == "yes":
-        for file in os.listdir("Notes"):
-            os.remove(os.path.join("Notes", file))
-        print("All notes have been cleared.")
-    elif confirmation == "no":
-        print("Clear operation cancelled.")
-    else:
-        print("Invalid input. Please enter 'yes' or 'no'.")\
+    file = input("Input the filename you want to clear: ")
+    check_for_file = backend.del_file_contents(file)
+    if not check_for_file:
+        print(f"{end_color}{red_text}Error: {file} does not exist.{end_color}")
+        time.sleep(1.5)
     
+    else:
+        print("Notes cleared Successfully")
+        time.sleep(1.5)
     print(f"{end_color}")
     main()
 
@@ -163,24 +167,23 @@ def DeleteNote():
     print(f"{bold_text}{purple_text}\nDelete Note{end_color}")
     print(f"{blue_text}")
 
-    filename = input("Enter the name of the note to delete (without .md extension): ")
-    if ".md" not in filename:
-        filename += ".md"
-    filepath = os.path.join("Notes", filename)
-
-    if os.path.exists(filepath):
-        os.remove(filepath)
-        print(f"{filename} has been deleted.")
-    else:
-        print(f"Error: {filename} does not exist.")
+    filename = input("Enter the name of the file to delete (without .md extension): ")
+    check_for_file = backend.remove_file(filename)
+    if not check_for_file: 
+        print(f"{end_color}{red_text}Error: {filename} does not exist.")
+        time.sleep(1.5)
+    
 
     print(f"{end_color}")
     main()
 
 def MKDownToPdf():
     read_input = input(f"{blue_text}Input the file name which you wish to convert to PDF. (Format: filename.md): ")
-    if backend.MkDownToPDF(read_input) == "false":
+    if not backend.MkDownToPDF(read_input):
         print(f"{red_text}File does not exist{end_color}")
+        time.sleep(1.5)
+    else: 
+        print(f"File converted Successfully{end_color}")
         time.sleep(1.5)
         
     main()
