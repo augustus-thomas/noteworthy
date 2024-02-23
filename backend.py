@@ -4,13 +4,14 @@ import time
 from datetime import date
 from datetime import datetime
 
-#import easygui
+import easygui
 
 # This function saves a newline to the lastmodified csv that marks some change and the date
 def save_modified(file, date)
 	with open('lastmodified.csv','a') as f:
-		f.write(str(date) + "," + file + '\n')
+		f.write(str(date) + chr(0x1F) + "," + file + '\n')
 # MKDownToPDF
+
 def MKDownToPDF(filename):
     pass 
 
@@ -48,7 +49,7 @@ def search_for_modfication_on_date(date, before_or_after):
 		for c in l:
 			if date[i] != c:
 				break
-			if i > 2 && date[i] == chr(0x1F):
+			if date[i] == chr(0x1F):
 				return filename
 	return False
 # Prototype, tests still need to be written
