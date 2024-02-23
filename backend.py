@@ -3,12 +3,12 @@ import os
 import time
 from datetime import date
 
-#import easygui
+import easygui
 
 # This function saves a newline to the lastmodified csv that marks some change and the date
 def save_modified(file, date)
 	with open('lastmodified.csv','a') as f:
-		f.write(str(date) + "," + file + '\n')
+		f.write(str(date) + chr(0x1F) + "," + file + '\n')
 
 # return whether filename exists
 def search_for_filename(filename):
@@ -41,7 +41,7 @@ def search_for_modfication_on_date(date):
 		for c in l:
 			if date[i] != c:
 				break
-			if i > 2 && date[i] == chr(0x1F):
+			if date[i] == chr(0x1F):
 				return filename
 	return FALSE
 # Prototype, tests still need to be written
