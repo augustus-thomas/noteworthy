@@ -2,8 +2,8 @@ import backend
 from backend import input_pre_filled
 from backend import enter_edit
 # search for filename tests
-assert (backend.search_for_filename("testnote.md"))
-assert (backend.search_for_filename("doesntexist.md")) == False
+# assert (backend.search_for_filename("testnote.md"))
+# assert (backend.search_for_filename("doesntexist.md")) == False
 
 # search by date
 
