@@ -5,9 +5,14 @@ from datetime import date
 
 #import easygui
 
+# This function saves a newline to the lastmodified csv that marks some change and the date
+def save_modified(file, date)
+	with open('lastmodified.csv','a') as f:
+		f.write(str(date) + "," + file + '\n')
 # MKDownToPDF
 def MKDownToPDF(filename):
     pass 
+
 
 # return whether filename exists
 def search_for_filename(filename):
@@ -32,19 +37,30 @@ def search_title(date):
 	return output
 
 # date is in format zero width space "YYYY-MM-DD" zero width space on its own line
-def search_for_modfication_on_date(filename, date):
-	pass
+def search_for_modfication_on_date(date):
+	records = open('lastmodified.csv','r')
+	for l in records:
+		i = 0
+		filename = line.split(",")[1]
+		for c in l:
+			if date[i] != c:
+				break
+			if i > 2 && date[i] == chr(0x1F):
+				return filename
+	return FALSE
+# Prototype, tests still need to be written
 
-#^^ Change to search by date?
 
 # Fully deletes a file
 def remove_file(file):
 	os.remove(file)
+	save_modified(file, date = date.today())
 
 # Fully clears the file where info is stored
 def del_file_contents(file):
 	with open(file,'r+') as file:
 		file.truncate(0)
+	save_modified(file, date = date.today())
 
 # name is a filename. can have .md extension passed
 # if it has a period a different extension we will force it to be .md
@@ -66,12 +82,10 @@ def write(contents, date=date.today(), filename=None):
 		edit_char = "a"
 
 	with open(filename, edit_char) as f:
-#		f.write('\u2001' + str(date) + '\u2001' + '\n')
-#		I am having issues with this line, keep getting the error:
-#		UnicodeEncodeError: 'charmap' codec can't encode character '\u2001' in position 0: character maps to <undefined>
-#		So for now I am commenting it out, with the plan to look further into it
+		f.write(chr(0x1F) + str(date) + chr(0x1F) + '\n' )
+		# Using chr(0x1F) as it returns a standard ascii or unicode character of the unit seperator, a reserved character
 		f.write(contents)
-
+	save_modified(filename, date)
 # if filename doesn't exist, return a string with error message
 # if filename exists, return a string with its contents
 def view(filename):
@@ -94,16 +108,28 @@ def list():
 # This function operates by generating a text box (easyGUI) that is platform agnostic and allows for simple editing
 # while being less signifigant and easier to use than a full on text editor (VIM, NANO, platform specific editor, etc.)
 def input_pre_filled(prompt, prefill):
+	#Pass a prompt as if operating a normal input() statement and then a prefill which will fill the text box.
+	assert input == type("String")
 	input = easygui.enterbox(prompt, title="Input", default = prefill)
 	if input is None:
 		input = prefill
+	#returns the input from the user in the form of a string
 	return input
 
-# Concept for an edit function
-def enter_edit(file):
-	contents = view(file)
-	print(contents)
+# This function allows for editing using the easyGUI functionality outlined in input_pre_filled in order to faclite very
+# basic editing. 
+# NOTE: line breaks are preseverd but in the editing functionality are saved as zerospaces for some reason.
+# Possible solutions: replace the character for spaces with LaTeX formatting (i.e. \newline ) and therefore allow the user
+# easy addition of characters not well represented by the easyGUI.
+def enter_edit(file, date=date.today()):
+	#Pass a file in order to edit, optionally add a date to save as the date of modification
+	contents = open(file,'r')
 	contents = input_pre_filled("Edit in the text box", contents)
 	del_file_contents(file)
 	write(contents, filename = file)
+	with open(file, "a") as f:
+		f.write(chr(0x1F) + str(date) + chr(0x1F) + '\n')
+	save_modified(file, date)
+		# Using chr(0x1F) as it returns a standard ascii or unicode character of the unit seperator, a reserved character
+	#This function does not return anything
  
