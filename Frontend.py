@@ -75,7 +75,7 @@ def SearchNotes():
     read_input = input(f"{blue_text}Input 'date' or 'filename' for preferred search parameters: ")
 
     if read_input == "date":
-        read_input = input(f"{blue_text}Input the date you with to search for and specify before or after (Format: 2000/12/31 before): ")
+        read_input = input(f"{blue_text}Input the date you wish to search for and specify before or after (Format: 2000/12/31 before): ")
         
         
         #This part is temporary as I'm not sure whether functions are going to include before or after input, it just references it in specs.
@@ -94,7 +94,7 @@ def SearchNotes():
         print(f"{blue_text}There are " + n + f"{blue_text} matches. They are: ")
         x = 0
         while x < n:
-            print(searchOutput[x][0] + f"{blue_text}: Created on " + searchOutput[x][1])
+            print(searchOutput[x][0] + f"{blue_text}: Modified on " + searchOutput[x][1])
 
     if read_input == "filename":
         read_input = input(f"{blue_text}Input the filename that you wish to search for (Format: filename.md): ")
@@ -110,7 +110,7 @@ def SearchNotes():
         print(f"{blue_text}There are " + n  + f"{blue_text} matches. They are: ")
         x = 0
         while x < n:
-            print(searchOutput[x][0] + f"{blue_text}: Created on " + searchOutput[x][1])
+            print(searchOutput[x][0] + f"{blue_text}: Modified on " + searchOutput[x][1])
     
     print(f"{end_color}")
     main()
