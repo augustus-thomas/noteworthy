@@ -37,9 +37,12 @@ def search_for_modfication_on_date(filename, date):
 
 #^^ Change to search by date?
 
+# returns True is remove actually happened
 # Fully deletes a file
 def remove_file(file):
+	s = search_for_filename(file)
 	os.remove(file)
+	return s
 
 # Fully clears the file where info is stored
 def del_file_contents(file):
