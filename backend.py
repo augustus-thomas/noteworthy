@@ -8,15 +8,12 @@ import easygui
 # This function saves a newline to the lastmodified csv that marks some change and the date
 def save_modified(file, date)
 	with open('lastmodified.csv','a') as f:
-<<<<<<< HEAD
 		f.write(str(date) + chr(0x1F) + "," + file + '\n')
-=======
-		f.write(str(date) + "," + file + '\n')
 # MKDownToPDF
+
 def MKDownToPDF(filename):
     pass 
 
->>>>>>> 126a1b12a798a031dbc7fa5e5eff46ff7695a54b
 
 # return whether filename exists
 def search_for_filename(filename):
