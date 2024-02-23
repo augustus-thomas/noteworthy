@@ -2,6 +2,7 @@
 import os
 import time
 from datetime import date
+from datetime import datetime
 
 #import easygui
 
@@ -13,6 +14,8 @@ def save_modified(file, date)
 def MKDownToPDF(filename):
     pass 
 
+def format_date(d):
+	return d.strftime('%Y/%M/%d')
 
 # return whether filename exists
 def search_for_filename(filename):
@@ -36,8 +39,8 @@ def search_title(date):
 			output.append([filename, modified])
 	return output
 
-# date is in format zero width space "YYYY-MM-DD" zero width space on its own line
-def search_for_modfication_on_date(date):
+# date is in format zero width space "YYYY/MM/DD" zero width space on its own line
+def search_for_modfication_on_date(date, before_or_after):
 	records = open('lastmodified.csv','r')
 	for l in records:
 		i = 0
@@ -47,27 +50,31 @@ def search_for_modfication_on_date(date):
 				break
 			if i > 2 && date[i] == chr(0x1F):
 				return filename
-	return FALSE
+	return False
 # Prototype, tests still need to be written
 
 
+# returns True is remove actually happened
 # Fully deletes a file
 def remove_file(file):
+	s = search_for_filename(file)
 	os.remove(file)
-	save_modified(file, date = date.today())
+	if s:
+		save_modified(file, date = format_date(date.today()))
+	return s
 
 # Fully clears the file where info is stored
 def del_file_contents(file):
 	with open(file,'r+') as file:
 		file.truncate(0)
-	save_modified(file, date = date.today())
+	save_modified(file, date = format_date(date.today()))
 
 # name is a filename. can have .md extension passed
 # if it has a period a different extension we will force it to be .md
 
 # contents are string, filename may or may not already exist
 # filename is optional. if none, first word in contents dot md
-def write(contents, date=date.today(), filename=None):
+def write(contents, date=format_date(date.today()), filename=None):
 	# contents should be a string
 	assert type(contents) == type("string")
 
@@ -93,7 +100,7 @@ def view(filename):
 		with open("./Notes/" + filename, "r+") as f:
 			s = f.read()
 	else:
-		s = "false"
+		s = False
 	return s
 
 # list files in notes directory
