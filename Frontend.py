@@ -11,8 +11,8 @@ underline_text = '\033[4m'
 red_text = '\033[0;31m'
 #Idea - Text editor in the command line 
 #Does anyone have any other ideas 
-#C - add, view, main, stylstic choices (color, bold), help, introduction, Noteworthy User Manual
-#T - search, markdown to PDF (I just figure we can add this feature because it shouldn't be too difficult), 
+#C - add, view, main, stylstic choices (color, bold), help, introduction, Noteworthy User Manual, Markdown to PDF 
+#T - search
 #J - clear notes, delete files, list notes, edit notes (This one might be difficult to do)
 
 def Help(): 
@@ -31,13 +31,12 @@ def Help():
     elif help_variable == "date": 
         print ("Date Format: yyyy-mm-dd")
     elif help_variable == "end_of_file":
-        print ("Stop Writing to File: 'ctrl + D' ")
+        print (f"Stop Writing to File: 'ctrl + D'")
     else: 
-        print ("Function not Available")
-        exit()
-        
-    
-    print(f"{end_color}")
+        print (f"{red_text}Function not Available{end_color}")
+        time.sleep(1.5)
+        main()
+    print (f"{end_color}") 
     main()
     
 def AddNotes(): 
@@ -133,8 +132,12 @@ def ViewNotes():
     read_file = input(f"{underline_text}Input the Markdown File you wish to view: {end_color}{blue_text}")
     if ".md" not in read_file:
         read_file = f"{read_file}.md"
-        
-    print(backend.view(read_file))
+    
+    if backend.view(read_file) == "false":
+        print(f"{red_text}File does not exist{end_color}")
+        time.sleep(1.5)
+    else: 
+        print(backend.view(read_file))
     
     print(f"{end_color}")
     main()
@@ -151,8 +154,8 @@ def ClearNotes():
     elif confirmation == "no":
         print("Clear operation cancelled.")
     else:
-        print("Invalid input. Please enter 'yes' or 'no'.")
-
+        print("Invalid input. Please enter 'yes' or 'no'.")\
+    
     print(f"{end_color}")
     main()
 
@@ -176,6 +179,11 @@ def DeleteNote():
 
 def MKDownToPdf():
     read_input = input(f"{blue_text}Input the file name which you wish to convert to PDF. (Format: filename.md): ")
+    if backend.MkDownToPDF(read_input) == "false":
+        print(f"{red_text}File does not exist{end_color}")
+        time.sleep(1.5)
+        
+    main()
     
 def main(): 
     print(f"{bold_text}{purple_text}\nHomepage{end_color}")
@@ -189,6 +197,7 @@ def main():
     print("     help: to access the help manual")
     print("     delete: to delete a note")
     print("     clear: to clear all notes")
+    print("     convert: to convert MKdown to PDF")
     print("     exit: to exit the app\n")
     
     intended_action = input(f"{underline_text}What would you like to do?{end_color}{blue_text} ")
@@ -207,11 +216,13 @@ def main():
         DeleteNote()
     elif intended_action == "clear":
         ClearNotes()
+    elif intended_action == "convert":
+        MKDownToPdf()
     elif intended_action == "exit":
         exit()
     else: 
         print(f"{red_text}Invalid input. Please try again.\n{end_color}")
-        time.sleep(1)
+        time.sleep(1.5)
         main()
     
     print(f"{end_color}")

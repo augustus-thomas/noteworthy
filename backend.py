@@ -5,6 +5,10 @@ from datetime import date
 
 #import easygui
 
+# MKDownToPDF
+def MKDownToPDF(filename):
+    pass 
+
 # return whether filename exists
 def search_for_filename(filename):
 	return filename in os.listdir("Notes")
@@ -75,7 +79,7 @@ def view(filename):
 		with open("./Notes/" + filename, "r+") as f:
 			s = f.read()
 	else:
-		s = "File does not exist"
+		s = "false"
 	return s
 
 # list files in notes directory
