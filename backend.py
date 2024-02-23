@@ -6,7 +6,7 @@ from datetime import date
 #import easygui
 
 # This function saves a newline to the lastmodified csv that marks some change and the date
-def save_modified(file, date)
+def save_modified(file, date):
 	with open('lastmodified.csv','a') as f:
 		f.write(str(date) + "," + file + '\n')
 # MKDownToPDF
