@@ -11,8 +11,8 @@ underline_text = '\033[4m'
 red_text = '\033[0;31m'
 #Idea - Text editor in the command line 
 #Does anyone have any other ideas 
-#C - add, view, main, stylstic choices (color, bold), help, introduction, Noteworthy User Manual
-#T - search, markdown to PDF (I just figure we can add this feature because it shouldn't be too difficult), 
+#C - add, view, main, stylstic choices (color, bold), help, introduction, Noteworthy User Manual, Markdown to PDF 
+#T - search
 #J - clear notes, delete files, list notes, edit notes (This one might be difficult to do)
 
 def Help(): 
@@ -31,13 +31,12 @@ def Help():
     elif help_variable == "date": 
         print ("Date Format: yyyy-mm-dd")
     elif help_variable == "end_of_file":
-        print ("Stop Writing to File: 'ctrl + D' ")
+        print (f"Stop Writing to File: 'ctrl + D'")
     else: 
-        print ("Function not Available")
-        exit()
-        
-    
-    print(f"{end_color}")
+        print (f"{red_text}Function not Available{end_color}")
+        time.sleep(1.5)
+        main()
+    print (f"{end_color}") 
     main()
     
 def AddNotes(): 
@@ -71,28 +70,51 @@ def AddNotes():
 def SearchNotes():
     print(f"{bold_text}{purple_text}\nSearch Notes{end_color}")
     print(f"{blue_text}Would you like to search for file by modified date or by filename?")
+
     #Takes user input for date or filename for preference.
     read_input = input(f"{blue_text}Input 'date' or 'filename' for preferred search parameters: ")
+
     if read_input == "date":
-        read_input = input(f"{blue_text}Input the date you with to search for (Format: 2000/12/31): ")
+        read_input = input(f"{blue_text}Input the date you with to search for and specify before or after (Format: 2000/12/31 before): ")
+        
+        
+        #This part is temporary as I'm not sure whether functions are going to include before or after input, it just references it in specs.
+        split_input = read_input.split()
+        #If format doesn't have two terms
+        if len(split_input) != 2:
+            return
+        date = split_input[0]
+        searchDirection = split_input[1]
+
         #Passes to backend to have search_for_file ran
-        print("There are " + n + " matches. They are: ")
-        #print(##search_by_date filenameoutput + ": Created on " + ##search_for_file dateoutput)
+        #Takes the output and sets it to a variable, finding the length of the array to find how many terms there are, then going through while statement to print results.
+        #Might recommend a name change for "search_title" as it was searching by date instead of title.
+        searchOutput = backend.search_title(date, searchDirection)
+        n = len(searchOutput)
+        print(f"{blue_text}There are " + n + f"{blue_text} matches. They are: ")
+        x = 0
+        while x < n:
+            print(searchOutput[x][0] + f"{blue_text}: Created on " + searchOutput[x][1])
 
     if read_input == "filename":
-    
         read_input = input(f"{blue_text}Input the filename that you wish to search for (Format: filename.md): ")
+
         #Makes it an .md file if not inputted at first
         if ".md" not in read_input:
             read_input = f"{read_input}.md"
+
         #Passes to backend to have search_for_file ran
-        print("There are " + n  + " matches. They are: ")
-        #print(##search_for_file filenameoutput ": Created on " ##search_for_file dateoutput)
-    
+        #Takes the output and sets it to a variable, finds the length to find how many terms, then prints them.
+        searchOutput = backend.search_for_filename(read_input)
+        n = len(searchOutput)
+        print(f"{blue_text}There are " + n  + f"{blue_text} matches. They are: ")
+        x = 0
+        while x < n:
+            print(searchOutput[x][0] + f"{blue_text}: Created on " + searchOutput[x][1])
     
     print(f"{end_color}")
     main()
-
+    
 def ListNotes(): 
     print(f"{bold_text}{purple_text}\nList of Files{end_color}")
     print(f"{blue_text}")
@@ -110,8 +132,12 @@ def ViewNotes():
     read_file = input(f"{underline_text}Input the Markdown File you wish to view: {end_color}{blue_text}")
     if ".md" not in read_file:
         read_file = f"{read_file}.md"
-        
-    print(backend.view(read_file))
+    
+    if backend.view(read_file) == "false":
+        print(f"{red_text}File does not exist{end_color}")
+        time.sleep(1.5)
+    else: 
+        print(backend.view(read_file))
     
     print(f"{end_color}")
     main()
@@ -128,8 +154,8 @@ def ClearNotes():
     elif confirmation == "no":
         print("Clear operation cancelled.")
     else:
-        print("Invalid input. Please enter 'yes' or 'no'.")
-
+        print("Invalid input. Please enter 'yes' or 'no'.")\
+    
     print(f"{end_color}")
     main()
 
@@ -153,6 +179,11 @@ def DeleteNote():
 
 def MKDownToPdf():
     read_input = input(f"{blue_text}Input the file name which you wish to convert to PDF. (Format: filename.md): ")
+    if backend.MkDownToPDF(read_input) == "false":
+        print(f"{red_text}File does not exist{end_color}")
+        time.sleep(1.5)
+        
+    main()
     
 def main(): 
     print(f"{bold_text}{purple_text}\nHomepage{end_color}")
@@ -166,6 +197,7 @@ def main():
     print("     help: to access the help manual")
     print("     delete: to delete a note")
     print("     clear: to clear all notes")
+    print("     convert: to convert MKdown to PDF")
     print("     exit: to exit the app\n")
     
     intended_action = input(f"{underline_text}What would you like to do?{end_color}{blue_text} ")
@@ -184,11 +216,13 @@ def main():
         DeleteNote()
     elif intended_action == "clear":
         ClearNotes()
+    elif intended_action == "convert":
+        MKDownToPdf()
     elif intended_action == "exit":
         exit()
     else: 
         print(f"{red_text}Invalid input. Please try again.\n{end_color}")
-        time.sleep(1)
+        time.sleep(1.5)
         main()
     
     print(f"{end_color}")
