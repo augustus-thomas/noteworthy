@@ -79,7 +79,7 @@ def view(filename):
 		with open("./Notes/" + filename, "r+") as f:
 			s = f.read()
 	else:
-		s = "false"
+		s = False
 	return s
 
 # list files in notes directory

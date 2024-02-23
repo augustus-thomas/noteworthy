@@ -133,7 +133,7 @@ def ViewNotes():
     if ".md" not in read_file:
         read_file = f"{read_file}.md"
     
-    if backend.view(read_file) == "false":
+    if not backend.view(read_file):
         print(f"{red_text}File does not exist{end_color}")
         time.sleep(1.5)
     else: 
