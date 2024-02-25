@@ -172,7 +172,10 @@ def DeleteNote():
     if not check_for_file: 
         print(f"{end_color}{red_text}Error: {filename} does not exist.")
         time.sleep(1.5)
-    
+        
+    else:
+        print("Notes cleared Successfully")
+        time.sleep(1.5)
 
     print(f"{end_color}")
     main()
