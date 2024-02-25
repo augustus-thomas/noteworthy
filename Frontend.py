@@ -120,18 +120,20 @@ def ClearNotes():
     print(f"{bold_text}{purple_text}\nClear Notes{end_color}")
     print(f"{blue_text}")
 
-    confirmation = input("Are you sure you want to clear all notes? (yes/no): ").lower()
-    if confirmation == "yes":
-        for file in os.listdir("Notes"):
-            os.remove(os.path.join("Notes", file))
-        print("All notes have been cleared.")
-    elif confirmation == "no":
-        print("Clear operation cancelled.")
+    filename = input("Enter the name of the note to clear: ")
+    if ".md" not in filename:
+        filename += ".md"
+    filepath = os.path.join("Notes", filename)
+
+    if os.path.exists(filepath):
+        backend.del_file_contents(filepath)
+        print(f"Contents of {filename} have been cleared.")
     else:
-        print("Invalid input. Please enter 'yes' or 'no'.")
+        print(f"Error: {filename} does not exist.")
 
     print(f"{end_color}")
     main()
+
 
 def DeleteNote():
     print(f"{bold_text}{purple_text}\nDelete Note{end_color}")
