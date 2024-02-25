@@ -31,9 +31,17 @@ def save_modified(file, date):
 def format_date(d):
 	return d.strftime('%Y/%M/%d')
 
-# return whether filename exists
+# return a filename, date pair for particular file
 def search_for_filename(filename):
-	return filename in os.listdir("Notes")
+	result = []
+	with open('lastmodified.csv','r') as lm:
+		records = lm.readlines()
+	for line in records[1:]:
+		this_date, this_filename = line.split(",")
+		this_date = this_date[:-1]
+		if this_filename == filename:
+			result.append([this_filename, this_date])
+	return result
 
 # returns the content in file from the date requested
 def search_content(filename, date):
@@ -42,42 +50,30 @@ def search_content(filename, date):
 # returns a list of name date pairs [['name.md', '2022/04/11'], ['science.md', '2024/03/01']]
 def search_title(date):
 	# date info needs to be formated YYYY/MM/DD
-	year_date_month = [int(date_number) for date_number in str(date).split('/')]
+	year_date_month = date.split('/')
 	# make date into EPOCH
-	epoch = datetime(*year_date_month).timestamp()
+	epoch = datetime.datetime(*year_date_month, 0, 0, 0).strftime('%s')
 	output = []
 	for filename in os.listdir("Notes"):
 		# get the time file was last modified
-		modified = os.path.getmtime("./Notes/" + filename)
+		modified = os.path.getmtime(filename)
 		if modified >= epoch:
-			output.append([filename, datetime.fromtimestamp(modified).strftime('%Y/%m/%d')])
+			output.append([filename, modified])
 	return output
 
 # date is in format zero width space "YYYY/MM/DD" zero width space on its own line
 # returns set of files that were modified before or after and including a given date
 def search_for_modfication_on_date(date, before_or_after):
-	# make date a comparable epoch
-	search_epoch = string_to_epoch(date)
-	# throw "Error" and return false if you didnt supply correct string
-	if before_or_after != "before" and before_or_after != "after":
-		print("Error: please supply 'before' or 'after' strings in search")
-		return False
-	# to store all results
-	result = []
-	with open('lastmodified.csv','r') as lm:
-		records = lm.readlines()
-	for line in records[1:]:
-		this_date, this_filename = line.split(",")
-		this_date = this_date[:-1]
-		this_epoch = string_to_epoch(this_date)
-		if before_or_after == "before" and this_epoch < search_epoch:
-			result.append(this_filename)
-		if before_or_after == "after" and this_epoch >= search_epoch:
-			result.append(this_filename.strip())
-	if not result:
-		return False
-	else:
-		return result
+	records = open('lastmodified.csv','r')
+	for l in records:
+		i = 0
+		filename = line.split(",")[1]
+		for c in l:
+			if date[i] != c:
+				break
+			if date[i] == chr(0x1F):
+				return filename
+	return False
 # Prototype, tests still need to be written
 
 
