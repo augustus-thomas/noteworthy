@@ -46,9 +46,9 @@ def AddNotes():
     print (f"{bold_text}{purple_text}\nAdd Notes{end_color}")
     print (f"{blue_text}")
     name_of_file = input(f"{underline_text}Name of Markdown File to add to:{end_color}{blue_text} ")
-    name_of_file = f"Notes/{name_of_file}"
+    name_of_file = f"{name_of_file}"
     date_of_file = input(f"{underline_text}Input today's Date:{end_color}{blue_text} ")
-    date_of_file = f"Date: {date_of_file}"
+    date_of_file = f"{date_of_file}"
     if not ".md" in name_of_file:
         name_of_file = f"{name_of_file}.md"
     
