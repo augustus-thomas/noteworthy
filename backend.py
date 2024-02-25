@@ -45,7 +45,9 @@ def search_for_filename(filename):
 		records = lm.readlines()
 	for line in records[1:]:
 		this_date, this_filename = line.split(",")
-		this_date = this_date[:-1]
+		print(this_filename)
+		print(filename)
+		this_filename = this_filename.strip()
 		if this_filename == filename:
 			result.append([this_filename, this_date])
 	return result

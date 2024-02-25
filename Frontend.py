@@ -82,7 +82,7 @@ def SearchNotes():
         
         
         #This part is temporary as I'm not sure whether functions are going to include before or after input, it just references it in specs.
-        split_input = read_input.split()
+        split_input = read_input.split(" ")
         #If format doesn't have two terms
         if len(split_input) != 2:
             return
