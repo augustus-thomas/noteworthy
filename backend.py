@@ -31,8 +31,9 @@ def save_modified(file, date):
 def format_date(d):
 	return d.strftime('%Y/%M/%d')
 
-# return whether filename exists
+# return a filename, date pair for particular file
 def search_for_filename(filename):
+
 	return filename in os.listdir("Notes")
 
 # returns the content in file from the date requested
@@ -40,22 +41,7 @@ def search_content(filename, date):
 	pass
 	
 # returns a list of name date pairs [['name.md', '2022/04/11'], ['science.md', '2024/03/01']]
-def search_title(date):
-	# date info needs to be formated YYYY/MM/DD
-	year_date_month = [int(date_number) for date_number in str(date).split('/')]
-	# make date into EPOCH
-	epoch = datetime(*year_date_month).timestamp()
-	output = []
-	for filename in os.listdir("Notes"):
-		# get the time file was last modified
-		modified = os.path.getmtime("./Notes/" + filename)
-		if modified >= epoch:
-			output.append([filename, datetime.fromtimestamp(modified).strftime('%Y/%m/%d')])
-	return output
-
-# date is in format zero width space "YYYY/MM/DD" zero width space on its own line
-# returns set of files that were modified before or after and including a given date
-def search_for_modfication_on_date(date, before_or_after):
+def search_date(date, before_or_after):
 	# make date a comparable epoch
 	search_epoch = string_to_epoch(date)
 	# throw "Error" and return false if you didnt supply correct string
@@ -78,6 +64,11 @@ def search_for_modfication_on_date(date, before_or_after):
 		return False
 	else:
 		return result
+
+# date is in format zero width space "YYYY/MM/DD" zero width space on its own line
+# returns set of files that were modified before or after and including a given date
+def search_for_modfication_on_date(date, before_or_after):
+	
 # Prototype, tests still need to be written
 
 
