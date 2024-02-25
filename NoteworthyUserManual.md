@@ -38,7 +38,16 @@ Code example:
 ```
 
 ### Searching for a file 
-***This part can be done later. Currently the Specs and the current frontend code are not in agreement so I did not want to provide documentation for this yet 
+This function allows you to see the notes included in the Notes folder. This is useful so that users do not need to manually look into their file explorer to see modified dates and note names. This can be accessed in the home page by typing "search" when prompted to specify the action you wish to perform. Afterwards, you specify whether you wish to search for files by modified date or by filename and enter the parameter you wish to search by.
+
+Code example:
+```
+>>> Would you like to search for file by modified date or by filename?
+>>> Input 'date' or 'filename' for preferred search parameters: date
+>>> Input the date you wish to search for and specify before or after (Format: 2000/12/31 before): 2024/20/2 after
+>>> There are 1 matches. They are:
+>>> jump.md: Modified on 2024/22/2
+```
 
 ### Listing all files 
 This function prints out the name of every markdown file you have created for your notes into the command line. This function can be accessed in the home page by typing "list" when prompted to specify the action you wish to perform.
