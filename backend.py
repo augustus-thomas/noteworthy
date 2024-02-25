@@ -3,11 +3,10 @@ import os
 import time
 from datetime import date
 from datetime import datetime
-
 import easygui
 
 # This function saves a newline to the lastmodified csv that marks some change and the date
-def save_modified(file, date)
+def save_modified(file, date):
 	with open('lastmodified.csv','a') as f:
 		f.write(str(date) + chr(0x1F) + "," + file + '\n')
 # MKDownToPDF
@@ -59,14 +58,14 @@ def search_for_modfication_on_date(date, before_or_after):
 # Fully deletes a file
 def remove_file(file):
 	s = search_for_filename(file)
-	os.remove(file)
+	os.remove("./Notes/" + file)
 	if s:
 		save_modified(file, date = format_date(date.today()))
 	return s
 
 # Fully clears the file where info is stored
 def del_file_contents(file):
-	with open(file,'r+') as file:
+	with open("./Notes/" + file,'r+') as file:
 		file.truncate(0)
 	save_modified(file, date = format_date(date.today()))
 
