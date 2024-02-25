@@ -75,7 +75,7 @@ def search_date(date, before_or_after):
 # date is in format zero width space "YYYY/MM/DD" zero width space on its own line
 # returns set of files that were modified before or after and including a given date
 def search_for_modfication_on_date(date, before_or_after):
-	
+	pass
 # Prototype, tests still need to be written
 
 
