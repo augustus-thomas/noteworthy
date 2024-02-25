@@ -6,6 +6,14 @@ from datetime import datetime
 import easygui
 import pandoc
 
+def string_to_epoch(string):
+	year_date_month = [int(date_number) for date_number in str(string).split('/')]
+	epoch = datetime(*year_date_month).timestamp()
+	return epoch
+
+def epoch_to_string(epoch):
+	return datetime.fromtimestamp(modified).strftime('%Y/%m/%d')
+
 # This function saves a newline to the lastmodified csv that marks some change and the date
 def save_modified(file, date):
 	with open('lastmodified.csv','a') as f:
@@ -34,7 +42,7 @@ def search_content(filename, date):
 # returns a list of name date pairs [['name.md', '2022/04/11'], ['science.md', '2024/03/01']]
 def search_title(date):
 	# date info needs to be formated YYYY/MM/DD
-	year_date_month = [int(date_number) for date_number in date.split('/')]
+	year_date_month = [int(date_number) for date_number in str(date).split('/')]
 	# make date into EPOCH
 	epoch = datetime(*year_date_month).timestamp()
 	output = []
@@ -46,17 +54,30 @@ def search_title(date):
 	return output
 
 # date is in format zero width space "YYYY/MM/DD" zero width space on its own line
+# returns set of files that were modified before or after and including a given date
 def search_for_modfication_on_date(date, before_or_after):
-	records = open('lastmodified.csv','r')
-	for l in records:
-		i = 0
-		filename = line.split(",")[1]
-		for c in l:
-			if date[i] != c:
-				break
-			if date[i] == chr(0x1F):
-				return filename
-	return False
+	# make date a comparable epoch
+	search_epoch = string_to_epoch(date)
+	# throw "Error" and return false if you didnt supply correct string
+	if before_or_after != "before" and before_or_after != "after":
+		print("Error: please supply 'before' or 'after' strings in search")
+		return False
+	# to store all results
+	result = []
+	with open('lastmodified.csv','r') as lm:
+		records = lm.readlines()
+	for line in records[1:]:
+		this_date, this_filename = line.split(",")
+		this_date = this_date[:-1]
+		this_epoch = string_to_epoch(this_date)
+		if before_or_after == "before" and this_epoch < search_epoch:
+			result.append(this_filename)
+		if before_or_after == "after" and this_epoch >= search_epoch:
+			result.append(this_filename.strip())
+	if not result:
+		return False
+	else:
+		return result
 # Prototype, tests still need to be written
 
 
