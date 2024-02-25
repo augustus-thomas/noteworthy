@@ -64,8 +64,8 @@ def search_for_modfication_on_date(date, before_or_after):
 # Fully deletes a file
 def remove_file(file):
 	s = search_for_filename(file)
-	os.remove("./Notes/" + file)
 	if s:
+		os.remove("./Notes/" + file)
 		save_modified(file, date = format_date(date.today()))
 	return s
 
