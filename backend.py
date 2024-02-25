@@ -33,8 +33,15 @@ def format_date(d):
 
 # return a filename, date pair for particular file
 def search_for_filename(filename):
-
-	return filename in os.listdir("Notes")
+	result = []
+	with open('lastmodified.csv','r') as lm:
+		records = lm.readlines()
+	for line in records[1:]:
+		this_date, this_filename = line.split(",")
+		this_date = this_date[:-1]
+		if this_filename == filename:
+			result.append([this_filename, this_date])
+	return result
 
 # returns the content in file from the date requested
 def search_content(filename, date):
