@@ -6,6 +6,7 @@ from datetime import datetime
 import easygui
 import pandoc
 
+# CORE FUNCTIONALITY FUNCTIONS
 def string_to_epoch(string):
 	year_date_month = [int(date_number) for date_number in str(string).split('/')]
 	epoch = datetime(*year_date_month).timestamp()
@@ -13,6 +14,9 @@ def string_to_epoch(string):
 
 def epoch_to_string(epoch):
 	return datetime.fromtimestamp(modified).strftime('%Y/%m/%d')
+
+def format_date(d):
+	return d.strftime('%Y/%M/%d')
 
 def does_exist(filename):
 	return filename in os.listdir("Notes")
@@ -25,19 +29,20 @@ def save_modified(file, date):
 			f.write(str(date) + chr(0x1F) + "," + file + '\n')
 		except:
 			print(type(str(date)), type(chr(0x1F)), type(","), type(file), type('\n'))
-# MKDownToPDF
 
-# def MKDownToPDF(filename):
-#     if search_for_filename(filename):
-#     	if filename.find(".") == -1:
-#     		pdf_filename = filename + ".pdf"
-#     	else:
-#     		pdf_filename = filename[:filename.find(".")] + ".pdf"
-#     	md2pdf(pdf = "./Notes/" + pdf_filename, md="./Notes/" + filename)
+# This function operates by generating a text box (easyGUI) that is platform agnostic and allows for simple editing
+# while being less signifigant and easier to use than a full on text editor (VIM, NANO, platform specific editor, etc.)
+def input_pre_filled(prompt, prefill):
+	#Pass a prompt as if operating a normal input() statement and then a prefill which will fill the text box.
+	assert input == type("String")
+	input = easygui.enterbox(prompt, title="Input", default = prefill)
+	if input is None:
+		input = prefill
+	#returns the input from the user in the form of a string
+	return input
 
-def format_date(d):
-	return d.strftime('%Y/%M/%d')
 
+# SEARCH FUNCTIONS
 # return a filename, date pair for particular file
 def search_for_filename(filename):
 	result = []
@@ -51,10 +56,6 @@ def search_for_filename(filename):
 		if this_filename == filename:
 			result.append([this_filename, this_date])
 	return result
-
-# returns the content in file from the date requested
-def search_content(filename, date):
-	pass
 	
 # returns a list of name date pairs [['name.md', '2022/04/11'], ['science.md', '2024/03/01']]
 def search_date(date, before_or_after):
@@ -81,12 +82,19 @@ def search_date(date, before_or_after):
 	else:
 		return result
 
-# date is in format zero width space "YYYY/MM/DD" zero width space on its own line
-# returns set of files that were modified before or after and including a given date
-def search_for_modfication_on_date(date, before_or_after):
+# returns the content in file from the date requested
+def search_content(filename, date):
 	pass
-# Prototype, tests still need to be written
 
+
+# FILE MANAGMENT FUNCTIONS
+# list files in notes directory
+def list():
+	output = ""
+	for file in os.listdir("Notes"):
+		output += file + "\n"
+
+	return output
 
 # returns True is remove actually happened
 # Fully deletes a file
@@ -110,6 +118,8 @@ def del_file_contents(file):
 # name is a filename. can have .md extension passed
 # if it has a period a different extension we will force it to be .md
 
+
+# FILE MODIFICATION FUNCITONS
 # contents are string, filename may or may not already exist
 # filename is optional. if none, first word in contents dot md
 def write(contents, date=format_date(date.today()), filename=None):
@@ -141,26 +151,6 @@ def view(filename):
 		s = False
 	return s
 
-# list files in notes directory
-def list():
-	output = ""
-	for file in os.listdir("Notes"):
-		output += file + "\n"
-
-	return output
-
-
-# This function operates by generating a text box (easyGUI) that is platform agnostic and allows for simple editing
-# while being less signifigant and easier to use than a full on text editor (VIM, NANO, platform specific editor, etc.)
-def input_pre_filled(prompt, prefill):
-	#Pass a prompt as if operating a normal input() statement and then a prefill which will fill the text box.
-	assert input == type("String")
-	input = easygui.enterbox(prompt, title="Input", default = prefill)
-	if input is None:
-		input = prefill
-	#returns the input from the user in the form of a string
-	return input
-
 # This function allows for editing using the easyGUI functionality outlined in input_pre_filled in order to faclite very
 # basic editing. 
 # NOTE: line breaks are preseverd but in the editing functionality are saved as zerospaces for some reason.
@@ -177,4 +167,13 @@ def enter_edit(file, date=date.today()):
 	save_modified(file, date)
 		# Using chr(0x1F) as it returns a standard ascii or unicode character of the unit seperator, a reserved character
 	#This function does not return anything
- 
+
+# MKDownToPDF
+
+# def MKDownToPDF(filename):
+#     if search_for_filename(filename):
+#     	if filename.find(".") == -1:
+#     		pdf_filename = filename + ".pdf"
+#     	else:
+#     		pdf_filename = filename[:filename.find(".")] + ".pdf"
+#     	md2pdf(pdf = "./Notes/" + pdf_filename, md="./Notes/" + filename)
