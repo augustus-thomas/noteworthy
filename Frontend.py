@@ -82,7 +82,7 @@ def SearchNotes():
         
         
         #This part is temporary as I'm not sure whether functions are going to include before or after input, it just references it in specs.
-        split_input = read_input.split()
+        split_input = read_input.split(" ")
         #If format doesn't have two terms
         if len(split_input) != 2:
             return
@@ -94,7 +94,7 @@ def SearchNotes():
         #Might recommend a name change for "search_title" as it was searching by date instead of title.
         searchOutput = backend.search_date(date, searchDirection)
         n = len(searchOutput)
-        print(f"{blue_text}There are " + n + f"{blue_text} matches. They are: ")
+        print(f"{blue_text}There are " + str(n) + f"{blue_text} matches. They are: ")
         x = 0
         while x < n:
             print(searchOutput[x][0] + f"{blue_text}: Modified on " + searchOutput[x][1])
@@ -110,7 +110,7 @@ def SearchNotes():
         #Takes the output and sets it to a variable, finds the length to find how many terms, then prints them.
         searchOutput = backend.search_for_filename(read_input)
         n = len(searchOutput)
-        print(f"{blue_text}There are " + n  + f"{blue_text} matches. They are: ")
+        print(f"{blue_text}There are " + str(n)  + f"{blue_text} matches. They are: ")
         x = 0
         while x < n:
             print(searchOutput[x][0] + f"{blue_text}: Modified on " + searchOutput[x][1])

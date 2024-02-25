@@ -14,10 +14,17 @@ def string_to_epoch(string):
 def epoch_to_string(epoch):
 	return datetime.fromtimestamp(modified).strftime('%Y/%m/%d')
 
+def does_exist(filename):
+	return filename in os.listdir("Notes")
+
 # This function saves a newline to the lastmodified csv that marks some change and the date
 def save_modified(file, date):
+	assert type(date) == type("string")
 	with open('lastmodified.csv','a') as f:
-		f.write(str(date) + chr(0x1F) + "," + file + '\n')
+		try:
+			f.write(str(date) + chr(0x1F) + "," + file + '\n')
+		except:
+			print(type(str(date)), type(chr(0x1F)), type(","), type(file), type('\n'))
 # MKDownToPDF
 
 # def MKDownToPDF(filename):
@@ -38,7 +45,9 @@ def search_for_filename(filename):
 		records = lm.readlines()
 	for line in records[1:]:
 		this_date, this_filename = line.split(",")
-		this_date = this_date[:-1]
+		print(this_filename)
+		print(filename)
+		this_filename = this_filename.strip()
 		if this_filename == filename:
 			result.append([this_filename, this_date])
 	return result
@@ -64,9 +73,9 @@ def search_date(date, before_or_after):
 		this_date = this_date[:-1]
 		this_epoch = string_to_epoch(this_date)
 		if before_or_after == "before" and this_epoch < search_epoch:
-			result.append(this_filename)
+			result.append([this_filename.strip(), this_date])
 		if before_or_after == "after" and this_epoch >= search_epoch:
-			result.append(this_filename.strip())
+			result.append([this_filename.strip(), this_date])
 	if not result:
 		return False
 	else:
@@ -90,9 +99,13 @@ def remove_file(file):
 
 # Fully clears the file where info is stored
 def del_file_contents(file):
-	with open("./Notes/" + file,'r+') as file:
-		file.truncate(0)
-	save_modified(file, date = format_date(date.today()))
+	if does_exist(file):
+		with open("./Notes/" + file,'r+') as file:
+			file.truncate(0)
+		save_modified(file, date = format_date(date.today()))
+		return True
+	else:
+		return False
 
 # name is a filename. can have .md extension passed
 # if it has a period a different extension we will force it to be .md
@@ -121,7 +134,7 @@ def write(contents, date=format_date(date.today()), filename=None):
 # if filename doesn't exist, return a string with error message
 # if filename exists, return a string with its contents
 def view(filename):
-	if search_for_filename(filename):
+	if does_exist(filename):
 		with open("./Notes/" + filename, "r+") as f:
 			s = f.read()
 	else:
