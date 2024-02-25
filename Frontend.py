@@ -92,7 +92,7 @@ def SearchNotes():
         #Passes to backend to have search_for_file ran
         #Takes the output and sets it to a variable, finding the length of the array to find how many terms there are, then going through while statement to print results.
         #Might recommend a name change for "search_title" as it was searching by date instead of title.
-        searchOutput = backend.search_title(date, searchDirection)
+        searchOutput = backend.search_date(date, searchDirection)
         n = len(searchOutput)
         print(f"{blue_text}There are " + n + f"{blue_text} matches. They are: ")
         x = 0
