@@ -104,6 +104,7 @@ def SearchNotes():
         x = 0
         while x < n:
             print(searchOutput[x][0] + f"{blue_text}: Modified on " + searchOutput[x][1])
+            x += 1
             
         time.sleep(1.5)
 
@@ -122,6 +123,7 @@ def SearchNotes():
         x = 0
         while x < n:
             print(searchOutput[x][0] + f"{blue_text}: Modified on " + searchOutput[x][1])
+            x += 1
     
         time.sleep(1.5)
 
