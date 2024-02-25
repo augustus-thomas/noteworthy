@@ -4,6 +4,7 @@ import time
 from datetime import date
 from datetime import datetime
 import easygui
+import pandoc
 
 # This function saves a newline to the lastmodified csv that marks some change and the date
 def save_modified(file, date):
@@ -11,8 +12,13 @@ def save_modified(file, date):
 		f.write(str(date) + chr(0x1F) + "," + file + '\n')
 # MKDownToPDF
 
-def MKDownToPDF(filename):
-    pass 
+# def MKDownToPDF(filename):
+#     if search_for_filename(filename):
+#     	if filename.find(".") == -1:
+#     		pdf_filename = filename + ".pdf"
+#     	else:
+#     		pdf_filename = filename[:filename.find(".")] + ".pdf"
+#     	md2pdf(pdf = "./Notes/" + pdf_filename, md="./Notes/" + filename)
 
 def format_date(d):
 	return d.strftime('%Y/%M/%d')
@@ -28,15 +34,15 @@ def search_content(filename, date):
 # returns a list of name date pairs [['name.md', '2022/04/11'], ['science.md', '2024/03/01']]
 def search_title(date):
 	# date info needs to be formated YYYY/MM/DD
-	year_date_month = date.split('/')
+	year_date_month = [int(date_number) for date_number in date.split('/')]
 	# make date into EPOCH
-	epoch = datetime.datetime(*year_date_month, 0, 0, 0).strftime('%s')
+	epoch = datetime(*year_date_month).timestamp()
 	output = []
 	for filename in os.listdir("Notes"):
 		# get the time file was last modified
-		modified = os.path.getmtime(filename)
+		modified = os.path.getmtime("./Notes/" + filename)
 		if modified >= epoch:
-			output.append([filename, modified])
+			output.append([filename, datetime.fromtimestamp(modified).strftime('%Y/%m/%d')])
 	return output
 
 # date is in format zero width space "YYYY/MM/DD" zero width space on its own line
