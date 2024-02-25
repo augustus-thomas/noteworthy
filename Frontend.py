@@ -28,10 +28,13 @@ def Help():
 
     if help_variable == "syntax":
         print ("Markdown Syntax Guide: https://www.markdownguide.org/")
+        time.sleep(1.5)
     elif help_variable == "date": 
         print ("Date Format: yyyy-mm-dd")
+        time.sleep(1.5)
     elif help_variable == "end_of_file":
         print (f"Stop Writing to File: 'ctrl + D'")
+        time.sleep(1.5)
     else: 
         print (f"{red_text}Function not Available{end_color}")
         time.sleep(1.5)
@@ -125,8 +128,8 @@ def ListNotes():
     list_of_notes = (os.listdir("Notes"))
     for note in list_of_notes:
         print(note)
-        time.sleep(2)
-    
+
+    time.sleep(2)
     print(f"{end_color}")
     main()
     
@@ -152,6 +155,8 @@ def ClearNotes():
     print(f"{blue_text}")
 
     file = input("Input the filename you want to clear: ")
+    if ".md" not in file:
+        file = f"{file}.md"
     check_for_file = backend.del_file_contents(file)
     if not check_for_file:
         print(f"{end_color}{red_text}Error: {file} does not exist.{end_color}")
@@ -168,6 +173,8 @@ def DeleteNote():
     print(f"{blue_text}")
 
     filename = input("Enter the name of the file to delete (without .md extension): ")
+    if ".md" not in filename:
+        filename = f"{filename}.md"
     check_for_file = backend.remove_file(filename)
     if not check_for_file: 
         print(f"{end_color}{red_text}Error: {filename} does not exist.")
