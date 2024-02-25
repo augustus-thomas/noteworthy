@@ -8,7 +8,13 @@ You can access the required code for the Noteworthy application using the "Notew
 
 Additionally, you can install Noteworthy from the command line by running
 ```
-git clone https://github.com/augustus-thomas/noteworth
+$ git clone https://github.com/augustus-thomas/noteworth
+```
+
+Finally, install the Python package requirements by navigating to `noteworthy` and running
+
+```
+$ pip3 install -r requirements.txt
 ```
 
 # Current Functions
