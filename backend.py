@@ -56,6 +56,7 @@ def search_for_filename(filename):
 		this_filename = this_filename.strip()
 		if this_filename == filename:
 			result.append([this_filename, this_date])
+			print("appended")
 	return result
 	
 # returns a list of name date pairs [['name.md', '2022/04/11'], ['science.md', '2024/03/01']]
@@ -77,7 +78,7 @@ def search_date(date, before_or_after):
 			continue
 		this_date = this_date[:-1]
 		this_epoch = string_to_epoch(this_date)
-		if before_or_after == "before" and this_epoch < search_epoch:
+		if before_or_after == "before" and this_epoch <= search_epoch:
 			result.append([this_filename.strip(), this_date])
 		if before_or_after == "after" and this_epoch >= search_epoch:
 			result.append([this_filename.strip(), this_date])
