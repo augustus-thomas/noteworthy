@@ -72,6 +72,7 @@ def search_date(date, before_or_after):
 		records = lm.readlines()
 	for line in records[1:]:
 		this_date, this_filename = line.split(",")
+		this_filename = this_filename.strip()
 		this_date = this_date[:-1]
 		this_epoch = string_to_epoch(this_date)
 		if before_or_after == "before" and this_epoch < search_epoch:
