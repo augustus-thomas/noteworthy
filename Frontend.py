@@ -1,6 +1,7 @@
 import os
 import backend
-import time 
+import time
+import re
 
 bold_text = '\033[1m'
 end_color = '\033[0m'
@@ -22,16 +23,27 @@ def Help():
     print(f"{underline_text}Help Functions{end_color}{blue_text}")
     print("     syntax: information relating to Markdown Syntax")
     print("     date: information about date formatting for this app")
-    print("     end_of_file: information about how to stop taking notes\n")
+    print("     end_of_file: information about how to stop taking notes")
+    print("     user_manual: information for code examples, documentation and use.\n")
     
     help_variable = input(f"{underline_text}What do you need help with?{end_color}{blue_text} ")
 
     if help_variable == "syntax":
         print ("Markdown Syntax Guide: https://www.markdownguide.org/")
+        time.sleep(1.5)
     elif help_variable == "date": 
         print ("Date Format: yyyy-mm-dd")
+        time.sleep(1.5)
     elif help_variable == "end_of_file":
-        print (f"Stop Writing to File: 'ctrl + D'")
+        print (f"Stop Writing to File: (Mac:) 'ctrl + D'")
+        print(f"Windows: 'ctrl + z'")
+        time.sleep(1.5)
+    elif help_variable == "user_manual":
+        incoming_input = 'NoteworthyUserManual.md'
+        with open(incoming_input, "r+") as f:
+            s = f.read()
+        print(s)
+        time.sleep(1.5)
     else: 
         print (f"{red_text}Function not Available{end_color}")
         time.sleep(1.5)
@@ -43,9 +55,9 @@ def AddNotes():
     print (f"{bold_text}{purple_text}\nAdd Notes{end_color}")
     print (f"{blue_text}")
     name_of_file = input(f"{underline_text}Name of Markdown File to add to:{end_color}{blue_text} ")
-    name_of_file = f"Notes/{name_of_file}"
+    name_of_file = f"{name_of_file}"
     date_of_file = input(f"{underline_text}Input today's Date:{end_color}{blue_text} ")
-    date_of_file = f"Date: {date_of_file}"
+    date_of_file = f"{date_of_file}"
     if not ".md" in name_of_file:
         name_of_file = f"{name_of_file}.md"
     
@@ -78,7 +90,7 @@ def SearchNotes():
     read_input = input(f"{blue_text}Input 'date' or 'filename' for preferred search parameters: ")
 
     if read_input == "date":
-        read_input = input(f"{blue_text}Input the date you wish to search for and specify before or after (Format: 2000/12/31 before): ")
+        read_input = input(f"{blue_text}Input the date you wish to search for and specify before or after (Format: 2000/01/01 before): ")
         
         
         #This part is temporary as I'm not sure whether functions are going to include before or after input, it just references it in specs.
@@ -89,15 +101,35 @@ def SearchNotes():
         date = split_input[0]
         searchDirection = split_input[1]
 
+        check = 0
+        regex_list = ['\d{4}/\d{2}/\d{2}']
+        for pattern in regex_list:
+            if re.match(pattern,date):
+                check = 0
+            else:
+                check = 1
+        
+        if check == 1:
+            print(f"Improper Format. The format is YYYY/MM/DD.")
+            print(f"Ensure you have '0's in single digit dates.")
+            time.sleep(1.5)
+            main()
+        
         #Passes to backend to have search_for_file ran
         #Takes the output and sets it to a variable, finding the length of the array to find how many terms there are, then going through while statement to print results.
         #Might recommend a name change for "search_title" as it was searching by date instead of title.
         searchOutput = backend.search_date(date, searchDirection)
+        if searchOutput == 0:
+            print("Error in search. Files could not exist or format was not properly used.")
+            main()
         n = len(searchOutput)
         print(f"{blue_text}There are " + str(n) + f"{blue_text} matches. They are: ")
         x = 0
         while x < n:
             print(searchOutput[x][0] + f"{blue_text}: Modified on " + searchOutput[x][1])
+            x += 1
+            
+        time.sleep(1.5)
 
     if read_input == "filename":
         read_input = input(f"{blue_text}Input the filename that you wish to search for (Format: filename.md): ")
@@ -109,12 +141,19 @@ def SearchNotes():
         #Passes to backend to have search_for_file ran
         #Takes the output and sets it to a variable, finds the length to find how many terms, then prints them.
         searchOutput = backend.search_for_filename(read_input)
+        #Expecting some possible false statement if file doesn't exist.
+        if searchOutput == 0:
+            print("Error in search. Files could not exist or format was not properly used.")
+            main()
         n = len(searchOutput)
         print(f"{blue_text}There are " + str(n)  + f"{blue_text} matches. They are: ")
         x = 0
         while x < n:
             print(searchOutput[x][0] + f"{blue_text}: Modified on " + searchOutput[x][1])
+            x += 1
     
+        time.sleep(1.5)
+
     print(f"{end_color}")
     main()
     
@@ -125,8 +164,8 @@ def ListNotes():
     list_of_notes = (os.listdir("Notes"))
     for note in list_of_notes:
         print(note)
-        time.sleep(2)
-    
+        
+    time.sleep(2)
     print(f"{end_color}")
     main()
     
@@ -152,6 +191,8 @@ def ClearNotes():
     print(f"{blue_text}")
 
     file = input("Input the filename you want to clear: ")
+    if ".md" not in file:
+        file = f"{file}.md"
     check_for_file = backend.del_file_contents(file)
     if not check_for_file:
         print(f"{end_color}{red_text}Error: {file} does not exist.{end_color}")
@@ -168,13 +209,15 @@ def DeleteNote():
     print(f"{blue_text}")
 
     filename = input("Enter the name of the file to delete (without .md extension): ")
+    if ".md" not in filename:
+        filename = f"{filename}.md"
     check_for_file = backend.remove_file(filename)
     if not check_for_file: 
         print(f"{end_color}{red_text}Error: {filename} does not exist.")
         time.sleep(1.5)
         
     else:
-        print("Notes cleared Successfully")
+        print("Notes deleted Successfully")
         time.sleep(1.5)
 
     print(f"{end_color}")
