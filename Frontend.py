@@ -3,7 +3,6 @@ import backend
 import time
 import re
 
-#1 
 
 bold_text = '\033[1m'
 end_color = '\033[0m'
@@ -37,8 +36,7 @@ def Help():
         print ("Date Format: yyyy-mm-dd")
         time.sleep(1.5)
     elif help_variable == "end_of_file":
-        print (f"Stop Writing to File: (Mac:) 'ctrl + D'")
-        print(f"Windows: 'ctrl + z'")
+        print (f"Stop Writing to File: '*END'")
         time.sleep(1.5)
     elif help_variable == "user_manual":
         incoming_input = 'NoteworthyUserManual.md'
@@ -47,7 +45,7 @@ def Help():
         print(s)
         time.sleep(1.5)
     else: 
-        print (f"{red_text}Function not Available{end_color}")
+        print (f"{red_text}Function not Available in help{end_color}")
         time.sleep(1.5)
     
     print (f"{end_color}") 
@@ -65,16 +63,14 @@ def AddNotes():
     
     print(f"{underline_text}Type notes below: {end_color}{blue_text}\n")
     print("     return key: Start a new line")
-    print("     ctrl + d for mac: Stop typing to file")
-    print("     ctrl + z for windows: Stop typing to file\n")
+    print("     *End: Stop typing to file")
     
     content = []
     while True: 
-        try: 
-            line = input("")
-        except EOFError:
+        notes = input("") 
+        if notes == "*END":
             break 
-        content.append(f"\n{line}")
+        content.append(f"\n{notes}")
 
     content_string = ' '.join([str(item) for item in content])
     backend.write(content_string, date_of_file, name_of_file)
@@ -248,7 +244,6 @@ def main():
     print("     help: to access the help manual")
     print("     delete: to delete a note")
     print("     clear: to clear all notes")
-    print("     convert: to convert MKdown to PDF")
     print("     exit: to exit the app\n")
     
     intended_action = input(f"{underline_text}What would you like to do?{end_color}{blue_text} ")
@@ -267,8 +262,6 @@ def main():
         DeleteNote()
     elif intended_action == "clear":
         ClearNotes()
-    elif intended_action == "convert":
-        MKDownToPdf()
     elif intended_action == "exit":
         exit()
     else: 

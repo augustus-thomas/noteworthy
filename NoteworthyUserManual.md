@@ -1,5 +1,5 @@
 # Description 
-Welcome to Noteworthy! We are the #1 notetaking application for markdown files. Some of our current available functions >>> include writing, viewing, searching, listing, deleting, clearing, and converting to PDF. If you have any questions relating to Markdown the link below provides useful information
+Welcome to Noteworthy! We are the #1 notetaking application for markdown files. Some of our current available functions >>> include writing, viewing, searching, listing, deleting, and clearing. If you have any questions relating to Markdown the link below provides useful information
 [Markdown Guide](https://www.markdownguide.org/)
 
 # Set Up/Installation 
@@ -27,7 +27,7 @@ Code Example
 ```
 
 ### Write to file 
-This function allows you to both write to existing files and create new files to write to. This writing function can be accessed in the home page by typing "add" when prompted to specify the action you want to perform. The creation of a new file can be done by typing in the name of the file you wish to create when prompted. Furthermore, when you access this function you will be prompted to specify the name of a file you wish to write to, the date (yyyy/mm/dd), and finally what you wish to write. You can press your return key to start a new line and ctrl + d to stop writing to a file. 
+This function allows you to both write to existing files and create new files to write to. This writing function can be accessed in the home page by typing "add" when prompted to specify the action you want to perform. The creation of a new file can be done by typing in the name of the file you wish to create when prompted. Furthermore, when you access this function you will be prompted to specify the name of a file you wish to write to, the date (yyyy/mm/dd), and finally what you wish to write. You can press your return key to start a new line and '*END' to stop writing to a file. 
 
 Code example: 
 ```
@@ -72,14 +72,6 @@ This function is used to clear all the information from a specified markdown fil
 Code example:
 ```
 >>> Enter the name of the note to clear: file.md
-```
-
-### Markdown to PDF Conversion
-This function is used to convert a markdown file to a pdf file. This function can be accessed in the home page by typing "convert" when prompted to specify an action you wish to perform. This function can be used by typing the name of the file you wish to convert to a PDF. It is worth noting that the original markdown file will not be deleted during this conversion.
-
-Code example:
-```
->>> Input the file name which you wish to convert to PDF: file.md
 ```
 
 ### Help function
