@@ -1,6 +1,7 @@
 import os
 import backend
-import time 
+import time
+import re
 
 bold_text = '\033[1m'
 end_color = '\033[0m'
@@ -89,7 +90,7 @@ def SearchNotes():
     read_input = input(f"{blue_text}Input 'date' or 'filename' for preferred search parameters: ")
 
     if read_input == "date":
-        read_input = input(f"{blue_text}Input the date you wish to search for and specify before or after (Format: 2000/12/31 before): ")
+        read_input = input(f"{blue_text}Input the date you wish to search for and specify before or after (Format: 2000/01/01 before): ")
         
         
         #This part is temporary as I'm not sure whether functions are going to include before or after input, it just references it in specs.
@@ -100,6 +101,20 @@ def SearchNotes():
         date = split_input[0]
         searchDirection = split_input[1]
 
+        check = 0
+        regex_list = ['\d{4}/\d{2}/\d{2}']
+        for pattern in regex_list:
+            if re.match(pattern,date):
+                check = 0
+            else:
+                check = 1
+        
+        if check == 1:
+            print(f"Improper Format. The format is YYYY/MM/DD.")
+            print(f"Ensure you have '0's in single digit dates.")
+            time.sleep(1.5)
+            main()
+        
         #Passes to backend to have search_for_file ran
         #Takes the output and sets it to a variable, finding the length of the array to find how many terms there are, then going through while statement to print results.
         #Might recommend a name change for "search_title" as it was searching by date instead of title.
@@ -126,6 +141,7 @@ def SearchNotes():
         #Passes to backend to have search_for_file ran
         #Takes the output and sets it to a variable, finds the length to find how many terms, then prints them.
         searchOutput = backend.search_for_filename(read_input)
+        #Expecting some possible false statement if file doesn't exist.
         if searchOutput == 0:
             print("Error in search. Files could not exist or format was not properly used.")
             main()
