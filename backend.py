@@ -73,6 +73,8 @@ def search_date(date, before_or_after):
 	for line in records[1:]:
 		this_date, this_filename = line.split(",")
 		this_filename = this_filename.strip()
+		if does_exist(this_filename):
+			continue
 		this_date = this_date[:-1]
 		this_epoch = string_to_epoch(this_date)
 		if before_or_after == "before" and this_epoch < search_epoch:
@@ -136,11 +138,11 @@ def write(contents, date=format_date(date.today()), filename=None):
 		filename = potential_filename.split(",", 1)[0]
 
 	edit_char = "w"
-	if search_for_filename(filename):
+	if does_exist(filename):
 		# append if filename already exists
 		edit_char = "a"
 
-	with open(filename, edit_char) as f:
+	with open("./Notes/" + filename, edit_char) as f:
 		f.write(chr(0x1F) + str(date) + chr(0x1F) + '\n' )
 		# Using chr(0x1F) as it returns a standard ascii or unicode character of the unit seperator, a reserved character
 		f.write(contents)
