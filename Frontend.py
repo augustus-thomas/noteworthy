@@ -65,7 +65,7 @@ def AddNotes():
     
     print(f"{underline_text}Type notes below: {end_color}{blue_text}\n")
     print("     return key: Start a new line")
-    print("     ctrl + d for mac: Stop typing to file\n")
+    print("     ctrl + d for mac: Stop typing to file")
     print("     ctrl + z for windows: Stop typing to file\n")
     
     content = []
@@ -225,14 +225,14 @@ def DeleteNote():
     print(f"{end_color}")
     main()
 
-def MKDownToPdf():
-    read_input = input(f"{blue_text}Input the file name which you wish to convert to PDF. (Format: filename.md): ")
-    if not backend.MkDownToPDF(read_input):
-        print(f"{red_text}File does not exist{end_color}")
-        time.sleep(1.5)
-    else: 
-        print(f"File converted Successfully{end_color}")
-        time.sleep(1.5)
+#def MKDownToPdf():
+#    read_input = input(f"{blue_text}Input the file name which you wish to convert to PDF. (Format: filename.md): ")
+#    if not backend.MkDownToPDF(read_input):
+#        print(f"{red_text}File does not exist{end_color}")
+#        time.sleep(1.5)
+#    else: 
+#        print(f"File converted Successfully{end_color}")
+#        time.sleep(1.5)
         
     main()
     

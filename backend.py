@@ -103,6 +103,8 @@ def remove_file(file):
 	if s:
 		os.remove("./Notes/" + file)
 		save_modified(file, date = format_date(date.today()))
+	else: 
+		s = False
 	return s
 
 # Fully clears the file where info is stored
