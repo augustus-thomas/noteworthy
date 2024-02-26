@@ -91,7 +91,7 @@ def search_for_modfication_on_date(date, before_or_after):
 # returns True is remove actually happened
 # Fully deletes a file
 def remove_file(file):
-	s = search_for_filename(file)
+	s = does_exist(file)
 	if s:
 		os.remove("./Notes/" + file)
 		save_modified(file, date = format_date(date.today()))
