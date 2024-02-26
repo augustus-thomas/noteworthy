@@ -8,7 +8,9 @@ import pandoc
 
 # CORE FUNCTIONALITY FUNCTIONS
 def string_to_epoch(string):
+	assert string == string.strip()
 	year_date_month = [int(date_number) for date_number in str(string).split('/')]
+	assert len(year_date_month) == 3
 	epoch = datetime(*year_date_month).timestamp()
 	return epoch
 
@@ -29,20 +31,19 @@ def save_modified(file, date):
 			f.write(str(date) + chr(0x1F) + "," + file + '\n')
 		except:
 			print(type(str(date)), type(chr(0x1F)), type(","), type(file), type('\n'))
+# MKDownToPDF
 
-# This function operates by generating a text box (easyGUI) that is platform agnostic and allows for simple editing
-# while being less signifigant and easier to use than a full on text editor (VIM, NANO, platform specific editor, etc.)
-def input_pre_filled(prompt, prefill):
-	#Pass a prompt as if operating a normal input() statement and then a prefill which will fill the text box.
-	assert input == type("String")
-	input = easygui.enterbox(prompt, title="Input", default = prefill)
-	if input is None:
-		input = prefill
-	#returns the input from the user in the form of a string
-	return input
+# def MKDownToPDF(filename):
+#     if search_for_filename(filename):
+#     	if filename.find(".") == -1:
+#     		pdf_filename = filename + ".pdf"
+#     	else:
+#     		pdf_filename = filename[:filename.find(".")] + ".pdf"
+#     	md2pdf(pdf = "./Notes/" + pdf_filename, md="./Notes/" + filename)
 
+def format_date(d):
+	return d.strftime('%Y/%m/%d')
 
-# SEARCH FUNCTIONS
 # return a filename, date pair for particular file
 def search_for_filename(filename):
 	result = []
@@ -169,7 +170,6 @@ def enter_edit(file, date=date.today()):
 	save_modified(file, date)
 		# Using chr(0x1F) as it returns a standard ascii or unicode character of the unit seperator, a reserved character
 	#This function does not return anything
-
 # MKDownToPDF
 
 # def MKDownToPDF(filename):
