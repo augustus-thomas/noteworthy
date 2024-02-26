@@ -22,7 +22,8 @@ def Help():
     print(f"{underline_text}Help Functions{end_color}{blue_text}")
     print("     syntax: information relating to Markdown Syntax")
     print("     date: information about date formatting for this app")
-    print("     end_of_file: information about how to stop taking notes\n")
+    print("     end_of_file: information about how to stop taking notes")
+    print("     user_manual: information for code examples, documentation and use.\n")
     
     help_variable = input(f"{underline_text}What do you need help with?{end_color}{blue_text} ")
 
@@ -33,7 +34,14 @@ def Help():
         print ("Date Format: yyyy-mm-dd")
         time.sleep(1.5)
     elif help_variable == "end_of_file":
-        print (f"Stop Writing to File: 'ctrl + D'")
+        print (f"Stop Writing to File: (Mac:) 'ctrl + D'")
+        print(f"Windows: 'ctrl + z'")
+        time.sleep(1.5)
+    elif help_variable == "user_manual":
+        incoming_input = 'NoteworthyUserManual.md'
+        with open(incoming_input, "r+") as f:
+            s = f.read()
+        print(s)
         time.sleep(1.5)
     else: 
         print (f"{red_text}Function not Available{end_color}")
@@ -97,8 +105,8 @@ def SearchNotes():
         #Might recommend a name change for "search_title" as it was searching by date instead of title.
         searchOutput = backend.search_date(date, searchDirection)
         if searchOutput == 0:
-            print("Error in search")
-            main
+            print("Error in search. Files could not exist or format was not properly used.")
+            main()
         n = len(searchOutput)
         print(f"{blue_text}There are " + str(n) + f"{blue_text} matches. They are: ")
         x = 0
@@ -118,6 +126,9 @@ def SearchNotes():
         #Passes to backend to have search_for_file ran
         #Takes the output and sets it to a variable, finds the length to find how many terms, then prints them.
         searchOutput = backend.search_for_filename(read_input)
+        if searchOutput == 0:
+            print("Error in search. Files could not exist or format was not properly used.")
+            main()
         n = len(searchOutput)
         print(f"{blue_text}There are " + str(n)  + f"{blue_text} matches. They are: ")
         x = 0
@@ -190,7 +201,7 @@ def DeleteNote():
         time.sleep(1.5)
         
     else:
-        print("Notes cleared Successfully")
+        print("Notes deleted Successfully")
         time.sleep(1.5)
 
     print(f"{end_color}")
