@@ -7,7 +7,9 @@ import easygui
 import pandoc
 
 def string_to_epoch(string):
+	assert string == string.strip()
 	year_date_month = [int(date_number) for date_number in str(string).split('/')]
+	assert len(year_date_month) == 3
 	epoch = datetime(*year_date_month).timestamp()
 	return epoch
 
@@ -36,7 +38,7 @@ def save_modified(file, date):
 #     	md2pdf(pdf = "./Notes/" + pdf_filename, md="./Notes/" + filename)
 
 def format_date(d):
-	return d.strftime('%Y/%M/%d')
+	return d.strftime('%Y/%m/%d')
 
 # return a filename, date pair for particular file
 def search_for_filename(filename):
