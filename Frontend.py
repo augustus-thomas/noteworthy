@@ -63,7 +63,7 @@ def AddNotes():
     
     print(f"{underline_text}Type notes below: {end_color}{blue_text}\n")
     print("     return key: Start a new line")
-    print("     *End: Stop typing to file")
+    print("     *END: Stop typing to file")
     
     content = []
     while True: 
