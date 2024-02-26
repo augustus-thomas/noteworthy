@@ -8,7 +8,9 @@ import pandoc
 
 # CORE FUNCTIONALITY FUNCTIONS
 def string_to_epoch(string):
+	assert string == string.strip()
 	year_date_month = [int(date_number) for date_number in str(string).split('/')]
+	assert len(year_date_month) == 3
 	epoch = datetime(*year_date_month).timestamp()
 	return epoch
 
@@ -16,7 +18,7 @@ def epoch_to_string(epoch):
 	return datetime.fromtimestamp(modified).strftime('%Y/%m/%d')
 
 def format_date(d):
-	return d.strftime('%Y/%M/%d')
+	return d.strftime('%Y/%m/%d')
 
 def does_exist(filename):
 	return filename in os.listdir("Notes")
@@ -40,7 +42,6 @@ def input_pre_filled(prompt, prefill):
 		input = prefill
 	#returns the input from the user in the form of a string
 	return input
-
 
 # SEARCH FUNCTIONS
 # return a filename, date pair for particular file
@@ -71,6 +72,9 @@ def search_date(date, before_or_after):
 		records = lm.readlines()
 	for line in records[1:]:
 		this_date, this_filename = line.split(",")
+		this_filename = this_filename.strip()
+		if does_exist(this_filename):
+			continue
 		this_date = this_date[:-1]
 		this_epoch = string_to_epoch(this_date)
 		if before_or_after == "before" and this_epoch < search_epoch:
@@ -134,11 +138,11 @@ def write(contents, date=format_date(date.today()), filename=None):
 		filename = potential_filename.split(",", 1)[0]
 
 	edit_char = "w"
-	if search_for_filename(filename):
+	if does_exist(filename):
 		# append if filename already exists
 		edit_char = "a"
 
-	with open(filename, edit_char) as f:
+	with open("./Notes/" + filename, edit_char) as f:
 		f.write(chr(0x1F) + str(date) + chr(0x1F) + '\n' )
 		# Using chr(0x1F) as it returns a standard ascii or unicode character of the unit seperator, a reserved character
 		f.write(contents)
