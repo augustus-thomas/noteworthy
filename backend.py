@@ -51,8 +51,6 @@ def search_for_filename(filename):
 		records = lm.readlines()
 	for line in records[1:]:
 		this_date, this_filename = line.split(",")
-		print(this_filename)
-		print(filename)
 		this_filename = this_filename.strip()
 		if this_filename == filename:
 			result.append([this_filename, this_date])
@@ -73,14 +71,16 @@ def search_date(date, before_or_after):
 	for line in records[1:]:
 		this_date, this_filename = line.split(",")
 		this_filename = this_filename.strip()
-		if does_exist(this_filename):
-			continue
-		this_date = this_date[:-1]
-		this_epoch = string_to_epoch(this_date)
-		if before_or_after == "before" and this_epoch < search_epoch:
-			result.append([this_filename.strip(), this_date])
-		if before_or_after == "after" and this_epoch >= search_epoch:
-			result.append([this_filename.strip(), this_date])
+		if not does_exist(this_filename):
+			result.append(["NOW DELETED: " + this_filename.strip(), this_date])
+		else:
+			# gets rid of the delimiter character used for dates
+			this_date = this_date[:-1]
+			this_epoch = string_to_epoch(this_date)
+			if before_or_after == "before" and this_epoch <= search_epoch:
+				result.append([this_filename.strip(), this_date])
+			if before_or_after == "after" and this_epoch >= search_epoch:
+				result.append([this_filename.strip(), this_date])
 	if not result:
 		return False
 	else:
