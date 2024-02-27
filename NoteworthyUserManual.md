@@ -3,7 +3,7 @@ Welcome to Noteworthy! We are the #1 notetaking application for markdown files. 
 [Markdown Guide](https://www.markdownguide.org/)
 
 # Set Up/Installation 
-You can access the required code for the Noteworthy application using the "Noteworthy Code" link. Furthermore, it is worth noting that this is a command line application so no external downloads are required. Finally, you need to ensure you have a "Notes" subfolder inside of your Noteworthy directory. Furthermore, if you wish to run this application from the command line then the file you should run is "Frontend.py"
+You can access the required code for the Noteworthy application using the "Noteworthy Code" link. Furthermore, it is worth noting that this is a command line application so no external downloads are required. Finally, you need to ensure you have a "Notes" subfolder inside of your Noteworthy directory and a csv file with the name of "lastmodified.csv". Furthermore, if you wish to run this application from the command line then the file you should run is "Frontend.py"
 [Noteworthy Code](https://github.com/augustus-thomas/noteworthy)
 
 Additionally, you can install Noteworthy from the command line by running
