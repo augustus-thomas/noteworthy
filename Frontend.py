@@ -175,7 +175,7 @@ def ViewNotes():
         read_file = f"{read_file}.md"
     
     if not backend.view(read_file):
-        print(f"{red_text}File does not exist{end_color}")
+        print(f"{red_text}File is empty or does not exist{end_color}")
         time.sleep(1.5)
     else: 
         print(backend.view(read_file))
@@ -243,7 +243,7 @@ def main():
     print("     view: to view notes")
     print("     help: to access the help manual")
     print("     delete: to delete a note")
-    print("     clear: to clear all notes")
+    print("     clear: to clear all content of a note")
     print("     exit: to exit the app\n")
     
     intended_action = input(f"{underline_text}What would you like to do?{end_color}{blue_text} ")

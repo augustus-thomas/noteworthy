@@ -72,14 +72,15 @@ def search_date(date, before_or_after):
 		this_date, this_filename = line.split(",")
 		this_filename = this_filename.strip()
 		if not does_exist(this_filename):
-			return False
-		# gets rid of the delimiter character used for dates
-		this_date = this_date[:-1]
-		this_epoch = string_to_epoch(this_date)
-		if before_or_after == "before" and this_epoch <= search_epoch:
-			result.append([this_filename.strip(), this_date])
-		if before_or_after == "after" and this_epoch >= search_epoch:
-			result.append([this_filename.strip(), this_date])
+			result.append(["NOW DELETED: " + this_filename.strip(), this_date])
+		else:
+			# gets rid of the delimiter character used for dates
+			this_date = this_date[:-1]
+			this_epoch = string_to_epoch(this_date)
+			if before_or_after == "before" and this_epoch <= search_epoch:
+				result.append([this_filename.strip(), this_date])
+			if before_or_after == "after" and this_epoch >= search_epoch:
+				result.append([this_filename.strip(), this_date])
 	if not result:
 		return False
 	else:
